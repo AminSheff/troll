@@ -1,21 +1,24 @@
-local player = game:GetService("Players").LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+-- Ждем, пока игра и игрок полностью прогрузятся
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
 
--- Удаляем старое меню, если оно уже существует
-if playerGui:FindFirstChild("SabaHubGui") then
-	playerGui.SabaHubGui:Destroy()
+repeat task.wait() until LocalPlayer and LocalPlayer:FindFirstChild("PlayerGui")
+local PlayerGui = LocalPlayer.PlayerGui
+
+-- Удаляем старое меню, если оно уже было
+if PlayerGui:FindFirstChild("SabaHubGui") then
+    PlayerGui.SabaHubGui:Destroy()
 end
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "SabaHubGui"
 ScreenGui.ResetOnSpawn = false
-ScreenGui.Parent = playerGui
+ScreenGui.Parent = PlayerGui
 
 local Frame = Instance.new("Frame")
 Frame.Parent = ScreenGui
 Frame.AnchorPoint = Vector2.new(0.5, 0.5)
 Frame.Position = UDim2.new(0.5, 0, 0.5, 0)
--- Сделали размер адаптивным для телефонов (например, 85% ширины экрана, но не больше 450 пикселей)
 Frame.Size = UDim2.new(0.85, 0, 0, 250)
 Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
 Frame.BackgroundTransparency = 0.12
@@ -25,7 +28,7 @@ local FrameCorner = Instance.new("UICorner")
 FrameCorner.CornerRadius = UDim.new(0, 12)
 FrameCorner.Parent = Frame
 
--- Текст сообщения (теперь он не пустой!)
+-- Текст сообщения (теперь он точно заполнен!)
 local TextLabel1 = Instance.new("TextLabel")
 TextLabel1.Parent = Frame
 TextLabel1.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
